@@ -57,9 +57,9 @@ def edit_employee(id):
     form.dept_code.choices = depts
 
     if form.validate_on_submit():
-        emp.name= form.name.data
-        emp.state=form.state.data
-        emp.dept_code.data = form.dept_code.data
+        emp.name = form.name.data
+        emp.state = form.state.data
+        emp.dept_code = form.dept_code.data
         db.session.commit()
         return redirect('/phones')
     else:
