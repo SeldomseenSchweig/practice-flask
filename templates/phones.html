@@ -20,7 +20,7 @@
             <tbody>
                 {% for emp in emps %}
                 <tr>
-                    <td>{{emp.name}}</td>
+                    <td><a href="/employees/{{emp.id}}/edit">{{emp.name}}</a></td>
                     <td>{{emp.department.dept_name}}</td>
                     
                         {% if emp.department.phone %}
@@ -34,6 +34,7 @@
             </tbody>
         </table>
         <a href="/employees/new" class="btn btn-success">Add Employee</a>
+        
     </div>
  
     

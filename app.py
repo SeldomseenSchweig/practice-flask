@@ -3,7 +3,7 @@ from unicodedata import name
 from flask import Flask, redirect, render_template, flash, request
 from flask_debugtoolbar import DebugToolbarExtension
 from models import Employee,EmployeeProject, Department, db, connect_db, get_directory, get_directory_join, get_directory_join_class, get_directory_all_join
-from forms import NewEmployeeForm, AddSnackForm
+from forms import EmployeeForm, AddSnackForm
 
 app = Flask(__name__)
 
@@ -31,7 +31,7 @@ def list_phones():
 @app.route('/employees/new', methods=["POST", "GET"])
 def add_employee():
     """Adds Employees"""
-    form = NewEmployeeForm()
+    form = EmployeeForm()
     depts = db.session.query(Department.dept_code, Department.dept_name)
     form.dept_code.choices = depts
 
@@ -49,7 +49,33 @@ def add_employee():
 
 
 
+@app.route('/employees/<int:id>/edit', methods=["GET", "POST"])
+def edit_employee(id):
+    emp = Employee.query.get_or_404(id)
+    form = EmployeeForm(obj=emp)
+    depts = db.session.query(Department.dept_code, Department.dept_name)
+    form.dept_code.choices = depts
 
+    if form.validate_on_submit():
+        emp.name= form.name.data
+        emp.state=form.state.data
+        emp.dept_code.data = form.dept_code.data
+        db.session.commit()
+        return redirect('/phones')
+    else:
+        return render_template('edit_employee_form.html', form=form)
+
+
+
+
+
+
+
+
+
+
+
+# ___________----------------------------------------------------
 
 @app.route('/snacks/new', methods=["POST", "GET"])
 def add_snack():

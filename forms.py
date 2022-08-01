@@ -2,7 +2,7 @@ from unicodedata import category, name
 from xmlrpc.client import boolean
 from flask_wtf import FlaskForm
 from wtforms import RadioField,IntegerField, StringField, FloatField, BooleanField, SelectField
-
+from wtforms.validators import InputRequired
 
 class AddSnackForm(FlaskForm):
     """Adds snack to form"""
@@ -20,8 +20,8 @@ class AddSnackForm(FlaskForm):
 
 
 
-class NewEmployeeForm(FlaskForm):
-    name = StringField("Employee Name")
+class EmployeeForm(FlaskForm):
+    name = StringField("Employee Name", validators=[InputRequired])
     state= StringField("State")
     dept_code = SelectField('Department Code')
         
